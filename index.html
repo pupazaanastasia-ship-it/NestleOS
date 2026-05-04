@@ -2235,7 +2235,25 @@ function runSimulation() {
     }, i * 150);
   });
 }
-</script>
+</script><section style="padding:60px 40px; border-top:1px solid #1e2d4a;">
+  <h2>AI Simulation Panel</h2>
+
+  <input id="price" placeholder="Price (€)">
+  <input id="caffeine" placeholder="Caffeine mg">
+  <input id="sugar" placeholder="Sugar g">
+  <input id="sustainability" placeholder="Sustainability (0-1)">
+
+  <button onclick="runSimulation()">Run Simulation</button>
+
+  <div>
+    <p>PRICE_OPTIMIZER: <span id="priceScore">-</span></p>
+    <p>HEALTH_OPTIMIZER: <span id="healthScore">-</span></p>
+    <p>ECO_CONSCIOUS: <span id="ecoScore">-</span></p>
+    <p>RECOMMENDATION_ENGINE: <span id="recScore">-</span></p>
+  </div>
+
+  <ul id="ranking"></ul>
+</section>
 </body>
 </html>
 
