@@ -2163,6 +2163,79 @@ function getAppBlobURL() {
   } catch(e) { return null; }
 }
 </script>
+   <section style="padding:60px 40px; border-top:1px solid #1e2d4a;">
+  <h2 style="font-family:Fraunces; font-size:32px;">AI Simulation Panel</h2>
+
+  <!-- FORM -->
+  <div style="margin-top:20px; display:grid; gap:10px; max-width:400px;">
+    <input id="price" placeholder="Price (€)" type="number">
+    <input id="caffeine" placeholder="Caffeine mg" type="number">
+    <input id="sugar" placeholder="Sugar g" type="number">
+    <input id="sustainability" placeholder="Sustainability score (0-1)" type="number" step="0.1">
+    
+    <button onclick="runSimulation()">Run Simulation</button>
+  </div>
+
+  <!-- RESULTS -->
+  <div id="results" style="margin-top:30px;">
+    <div>PRICE_OPTIMIZER: <span id="priceScore">-</span></div>
+    <div>HEALTH_OPTIMIZER: <span id="healthScore">-</span></div>
+    <div>ECO_CONSCIOUS: <span id="ecoScore">-</span></div>
+    <div>RECOMMENDATION_ENGINE: <span id="recScore">-</span></div>
+  </div>
+
+  <!-- RANKING -->
+  <div style="margin-top:30px;">
+    <h3>Ranking</h3>
+    <ul id="ranking"></ul>
+  </div>
+</section>
+   <script>
+function runSimulation() {
+  const price = parseFloat(document.getElementById("price").value) || 0;
+  const caffeine = parseFloat(document.getElementById("caffeine").value) || 0;
+  const sugar = parseFloat(document.getElementById("sugar").value) || 0;
+  const sustainability = parseFloat(document.getElementById("sustainability").value) || 0;
+
+  // AGENT LOGIC (simulata)
+  const priceScore = 1 / (price + 1);
+  const healthScore = (1 - sugar/10) * (1 - caffeine/200);
+  const ecoScore = sustainability;
+  const recScore = (priceScore + healthScore + ecoScore) / 3;
+
+  // MOSTRA VALORI
+  document.getElementById("priceScore").innerText = priceScore.toFixed(2);
+  document.getElementById("healthScore").innerText = healthScore.toFixed(2);
+  document.getElementById("ecoScore").innerText = ecoScore.toFixed(2);
+  document.getElementById("recScore").innerText = recScore.toFixed(2);
+
+  // CREA RANKING
+  const ranking = [
+    {name: "PRICE_OPTIMIZER", score: priceScore},
+    {name: "HEALTH_OPTIMIZER", score: healthScore},
+    {name: "ECO_CONSCIOUS", score: ecoScore},
+    {name: "RECOMMENDATION_ENGINE", score: recScore}
+  ];
+
+  ranking.sort((a,b)=>b.score - a.score);
+
+  const list = document.getElementById("ranking");
+  list.innerHTML = "";
+
+  ranking.forEach((r, i) => {
+    const li = document.createElement("li");
+    li.innerText = `${i+1}. ${r.name} → ${r.score.toFixed(2)}`;
+    li.style.opacity = 0;
+    li.style.transition = "all 0.5s";
+    list.appendChild(li);
+
+    setTimeout(() => {
+      li.style.opacity = 1;
+      li.style.transform = "translateX(0)";
+    }, i * 150);
+  });
+}
+</script>
 </body>
 </html>
 
